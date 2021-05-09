@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .router import router
-from leaderboardapi.operations import snippet_detail, delete
+from leaderboardapi.operations import snippet_detail, delete, changePoints
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('abc/', snippet_detail),
-    path('abc/<int:pk>/', delete)
+    path('abc/<int:pk>/', delete),
+    path('abc/change/<int:pk>/', changePoints)
 ]

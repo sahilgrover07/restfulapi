@@ -29,9 +29,40 @@ def snippet_detail(request):
 
 @api_view(['DELETE'])
 def delete(request, pk):
-    queryset = Leaderboarddetail.objects.get(pk=pk)
+    try:
+        queryset = Leaderboarddetail.objects.get(pk=pk) 
+    except Leaderboarddetail.DoesNotExist:
+        return HttpResponse(status=404)
     queryset.delete()
     return HttpResponse(status=204)
+@api_view(['POST'])
+def changePoints(request, pk):
+    data = JSONParser().parse(request)
+    print(data)
+    if data["type"] == "add":
+        try:
+            queryset = Leaderboarddetail.objects.get(pk=pk)
+        except Leaderboarddetail.DoesNotExist:
+            return HttpResponse(status=404)
+        queryset.points=int(queryset.points)+1
+        queryset.save()
+        return HttpResponse(status=200)
+    elif data["type"] == "sub":
+        try:
+            queryset = Leaderboarddetail.objects.get(pk=pk)
+        except Leaderboarddetail.DoesNotExist:
+            return HttpResponse(status=404)
+        queryset.points=int(queryset.points)-1
+        queryset.save()
+        return HttpResponse(status=200)
+
+
+
+
+
+
+
+
 
 
 
