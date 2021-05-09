@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from .models import Leaderboarddetail
@@ -17,7 +18,8 @@ def snippet_detail(request):
     if request.method == 'GET':
         queryset = Leaderboarddetail.objects.all()
         serializer = serializers.leaderboardSerializer(queryset, many=True)
-        return JsonResponse(serializer.data,  safe=False)
+        serializer_data = sorted(serializer.data, key=lambda k: k['points'], reverse=True)
+        return JsonResponse(serializer_data,  safe=False)
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
@@ -26,6 +28,12 @@ def snippet_detail(request):
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
+def user_detail(request,pk):
+    if request.method == 'GET':
+        queryset = Leaderboarddetail.objects.get(pk=pk)
+        serializer = serializers.leaderboardSerializer(queryset, many=False)
+        return JsonResponse(serializer.data,  safe=False)
+
 
 @api_view(['DELETE'])
 def delete(request, pk):
@@ -46,7 +54,7 @@ def changePoints(request, pk):
             return HttpResponse(status=404)
         queryset.points=int(queryset.points)+1
         queryset.save()
-        return HttpResponse(status=200)
+        return HttpResponse("success",status=200)
     elif data["type"] == "sub":
         try:
             queryset = Leaderboarddetail.objects.get(pk=pk)
@@ -54,7 +62,7 @@ def changePoints(request, pk):
             return HttpResponse(status=404)
         queryset.points=int(queryset.points)-1
         queryset.save()
-        return HttpResponse(status=200)
+        return HttpResponse("success",status=200)
 
 
 
