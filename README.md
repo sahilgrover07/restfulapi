@@ -35,7 +35,18 @@ virtualenv\Scripts\activate
 ```bash
 pip install requirements.txt
 ```
-#### 6. Run the project 
+### In settings.py make the change on for the Database(I have used PgSQL)
+
+#### 6. create the model to store Leaderboard info
+```bash
+python manage.py makemigration Leaderboarddetail
+```
+#### 7. create the tables
+```bash
+python manage.py migrate
+```
+
+#### 8. Run the project 
 ```bash
 python manage.py runserver
 ```
