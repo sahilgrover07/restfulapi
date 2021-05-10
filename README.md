@@ -39,10 +39,16 @@ pip install requirements.txt
 ```bash
 python manage.py runserver
 ```
+
+Database
+![detailsInDB](https://user-images.githubusercontent.com/55259770/117594432-fe0db580-b10b-11eb-8a7d-6017ec1f6116.JPG)
+
 ### Go to your postman<br/> 
 <b>with get method</b> : <br/>
 In order to fetch all the records sorted W.R.T. total score
 <br/>
+
+
 http://127.0.0.1:8000/getoradd/
 
 ![getalluser(sorted with the scores)](https://user-images.githubusercontent.com/55259770/117590845-55f1ef80-b0ff-11eb-87b4-841f36fef035.JPG)
